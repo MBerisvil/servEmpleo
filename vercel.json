@@ -24,7 +24,7 @@
     }
   ],
   "env": {
-    "DATABASE_URL": "@database-url",
+    "DATABASE_URL": "https://github.com/MBerisvil/servEmpleo/blob/main/serv_empleo.db",
     "API_KEY": "@api-key"
   }
 }
