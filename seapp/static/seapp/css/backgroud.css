@@ -1,0 +1,30 @@
+
+body {
+    position: relative;  /* Necesario para el pseudo-elemento */
+    height: 100vh;  /* Asegúrate de que el cuerpo ocupe toda la altura de la ventana */
+    margin: 0;  /* Elimina el margen por defecto */
+    overflow: hidden;  /* Evita el desbordamiento */
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("{% static 'seapp/img/logotrans.jpeg' %}");
+    background-size: cover;  /* Ajusta la imagen para cubrir todo el fondo */
+    background-position: center;  /* Centra la imagen */
+    background-repeat: no-repeat;  /* Evita que la imagen se repita */
+    opacity: 0.5;  /* Ajusta la opacidad (0.0 a 1.0) */
+    z-index: -1;  /* Coloca el pseudo-elemento detrás del contenido */
+}
+
+.content {
+    position: relative;  /* Asegúrate de que el contenido esté por encima del fondo */
+    z-index: 1;  /* Asegura que el contenido esté por encima del pseudo-elemento */
+    color: white;  /* Cambia el color del texto si es necesario */
+    text-align: center;  /* Centra el texto */
+    padding: 20px;  /* Espaciado alrededor del contenido */
+}

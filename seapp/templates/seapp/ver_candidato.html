@@ -1,0 +1,35 @@
+{% extends 'seapp/base.html' %}
+
+{% load static %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+{% block container %}
+<div class="container">
+    <h2>Perfil de {{ persona.nombre }} {{ persona.apellido }}</h2>
+    <div class="card hover shadow-lg border-0">
+        <div class="card-header" style="background:#24527A;">
+            <h3 style="color:#ffff;">Información del Candidato</h3>
+        </div>
+        <div class="card-body">
+            <p><strong>Email:</strong> {{ persona.user.email }}</p>
+            <p><strong>Teléfono:</strong> {{ persona.telefono }}</p>
+            <p><strong>DNI:</strong> {{ persona.dni }}</p>
+            <p><strong>CUIT:</strong> {{ persona.cuit }}</p>
+            <p><strong>Fecha de Nacimiento:</strong> {{ persona.fecha_nacimiento }}</p>
+            <p><strong>Es Empresa:</strong> {{ persona.user.is_enterprise|yesno:"Sí,No" }}</p>
+
+            <h3>Estudios Realizados</h3>
+            <ul>
+                {% for estudio in estudios %}
+                    <li>{{ estudio.carrera }} ({{ estudio.niv_academico }})</li>
+                {% empty %}
+                    <li>No hay estudios registrados.</li>
+                {% endfor %}
+            </ul>
+
+            <a href="{% url 'listado_candidatos' %}" class="btn btn-primary">Volver al Listado</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -1,0 +1,122 @@
+{% extends 'seapp/base.html' %}
+
+{% block container %}
+{% load static %}
+{% load crispy_forms_tags %}
+<br><br><br><br><br>
+
+<div class="row container-fluid ">
+    <div class="col-12 col-md-10 offset-md-1"> 
+        <div class="card-body">
+            <br><br>
+            <div class="card hover shadow-lg border-0">
+                <div class="card-header" style="background:#24527A;">
+                     <h3 style="color:#ffff;">Estudios Cursados</h3> 
+                </div>
+                <div class="card-body text-left">
+                    <form action="{% url 'estudiorealizado.html' %}" method="post" class="form-group" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="col-md-8">
+                                <br>  
+                                <div id="div_id_carrera" class="mb-3"> 
+                                    <label for="id_carrera" class="form-label requiredField">Carrera<span class="asteriskField">*</span> </label> 
+                                    <input type="text" name="carrera" maxlength="150" class="textinput form-control" required="" id="id_carrera"> 
+                                </div> 
+                                <div id="div_id_niv_academico" class="mb-3"> 
+                                    <label for="id_niv_academico" class="form-label requiredField">Nivel Academico<span class="asteriskField">*</span> </label> 
+                                    <select name="niv_academico" class="select form-select" required="" id="id_niv_academico"> 
+                                        <option value="" selected="">---------</option> 
+                                        <option value="1">Primario</option> 
+                                        <option value="2">Secundario</option> 
+                                        <option value="3">Terciario</option> 
+                                        <option value="4">Universitario</option>          
+                                    </select> 
+                                </div> 
+                                <div id="div_id_esta_estudios" class="mb-3"> 
+                                    <label for="id_esta_estudios" class="form-label requiredField">Estado de Estudios<span class="asteriskField">*</span> </label> 
+                                    <select name="esta_estudios" class="select form-select" required="" id="id_esta_estudios"> 
+                                        <option value="" selected="">---------</option> 
+                                        <option value="1">Completo</option> 
+                                        <option value="2">Incompleto</option> 
+                                        <option value="3">En curso</option>             
+                                    </select> 
+                                </div> 
+                                <div id="div_id_estudiospersona" class="mb-3"> 
+                                    <input type="hidden" name="estudiospersona" class="textinput form-control" value="{{ Persona.id }}" required="" id="id_estudiospersona">
+                                    <br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 text-center">
+                            <div class="bg-transparent" style="border: none; padding: 8px;">
+                                <br><br>
+                                <img src="{% static 'seapp/img/certificado1.png' %}" class="card-img-center" alt="..." style="border-radius: 08px 60px 08px 08px; width: 14rem; height: 16rem;">
+                            </div>
+                        </div>
+                    </div>            
+                    <div class="card-footer text-center">
+                        <div class='d-flex justify-content-end'>
+                            <button type="submit" id="btnCancelar" class="btn btn-primary rounded-0 py-2 px-4" style="background: #5DACBD; border: none;">Cancelar</button>
+                            &nbsp;
+                            <button type="submit" id="btnGuardar" class="btn btn-primary rounded-0 py-2 px-4" style="background: #24527A; border: none;">Guardar</button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <br>
+                <div class="card hover shadow-lg border-0">          
+                    <div class="card-body text-left">                          
+                        <table class="table table-responsive">
+                            <thead class="thead-dark" style="background: #5DACBD; color:#fff;">
+                                <tr>
+                                    <th class="text-center">Título</th>
+                                    <th class="text-center">Nivel Académico</th>
+                                    <th class="text-center">Estado</th>
+                                    <th class="text-center">Acción</th>
+                                </tr>
+                            </thead>    
+                            {% if EstudioRealizado %}
+                                {% for estudiorealizado in EstudioRealizado %}
+                                    <tr>  
+                                        <td class="text-center">{{ estudiorealizado.carrera | title }}</td>
+                                        <td class="text-center">
+                                            {% if estudiorealizado.niv_academico == 1 %} Primario 
+                                            {% elif estudiorealizado.niv_academico == 2 %} Secundario 
+                                            {% elif estudiorealizado.niv_academico == 3 %} Terciario 
+                                            {% elif estudiorealizado.niv_academico == 4 %} Universitario 
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-center">
+                                            {% if estudiorealizado.esta_estudios == 1 %} Completo
+                                            {% elif estudiorealizado.esta_estudios == 2 %} Incompleto
+                                            {% elif estudiorealizado.esta_estudios == 3 %} En curso
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-center">
+                                            <a class="fa-brands align-items-center btn btn-sm" href="{% url 'eliminar_estudiorealizado.html' estudiorealizado.id %}" style="font-size: 11px; border:none;">
+                                                <img src="{% static 'seapp/img/icons/remove-48.png' %}" style="height: 20px; width: 20px;" alt="">
+                                            </a>
+                                        </td>
+                                    </tr> 
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="4" class="text-center"><h5>El usuario no posee estudios</h5></td>
+                                </tr>
+                            {% endif %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

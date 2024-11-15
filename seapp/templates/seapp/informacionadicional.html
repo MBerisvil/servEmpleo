@@ -1,0 +1,105 @@
+{% extends 'seapp/base.html' %}
+
+{% load static %}
+
+{% block container %}
+
+{% load crispy_forms_tags %}
+<br><br><br><br><br>
+
+
+<div class="col-12 col-md-9 offset-md-1">
+    <div class="card-body">
+        <br><br>
+        <div class="card hover shadow-lg border-0">
+            <div class="card-header" style="background:#24527A;">
+                 <h3 style="color:#ffff";>Informacion Adicional</h3> 
+            </div>
+            <div class="card-body text-left">
+                <form control="" action="{% url 'informacionadicional.html'  %}" method="post" class="form-group" enctype="multipart/form-data">
+                <!--Token de seguridad-->
+                {% csrf_token %}
+                <!-- Form de Empresas -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="col-md-8">
+                            <br>  
+                            <div id="div_id_curso" class="mb-3"> 
+                                <label for="id_curso" class="form-label requiredField">Capacitación<span class="asteriskField"></span> </label> 
+                                <input type="text" name="curso" maxlength="150" class="textinput form-control" required="" id="id_curso"> 
+                            </div> 
+                            <div id="div_id_instituto_cursado" class="mb-3"> 
+                                <label for="id_instituto_cursado" class="form-label requiredField">Instituto Cursado<span class="asteriskField"></span> </label> 
+                                <input type="text" name="instituto_cursado" maxlength="150" class="textinput form-control" required="" id="id_instituto_cursado"> 
+                            </div>  
+
+                        </div>
+
+                    </div>
+                    <div class="col-6 col-md-4 text-center" style="">
+                        <div class="bg-transparent" style="border: none;">
+                            <br><br>
+                            <img src="{% static 'seapp/img/certificado1.png'%}" class="card-img-center" alt="..." style="border-radius: 08px 60px 08px 08px; width: 12rem; height: 12rem;">
+                        </div>
+                    </div>
+                </div>
+            </div>            
+            <div class="card-footer text-center">
+            <div class='d-flex justify-content-end'>
+                <button type="submit" id="btnCancelar" class="btn btn-primary rounded-0 py-2 px-4" style="background: #5DACBD; border: none;">Cancelar</button>
+                &nbsp;
+                <button type="submit" id="btnGuardar" class="btn btn-primary rounded-0 py-2 px-4"  style="background: #24527A; border: none;">Guardar</button>
+            </div>
+            </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <br>
+        <div class="card hover shadow-lg border-0">          
+            <div class="card-body text-left">                          
+                <table class="table table-responsive">
+                    <thead class="thead-dark " style="background: #5DACBD; color:#fff;" >
+                        <tr>
+                            <th class="text-center">Certificación</th>
+                            <th class="text-center">Instituto</th>
+                            <th class="text-center">Acción</th>
+                        </tr>
+                    </thead>    
+                
+                        {% if InformacionAdicional %}
+
+                            {% for info in InformacionAdicional %}
+                                <tr>  
+                                    <td class="text-center">{{info.curso | title }}</td>
+                                    
+                                    <td class="text-center">{{info.instituto_cursado | title }}</td>
+
+                                    <td class="text-center"><a class="fa-brands align-items-center btn btn-sm"  href="{% url 'eliminar_informacion.html' info.id %}" style="font-size: 11px;  border:none;">
+                                        <img src="{% static 'seapp/img/icons/remove-48.png'%}" style="height: 20px; width: 20px; " alt=""></a>
+                                    </td>
+                                        
+                                </tr> 
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="3" class="text-center"><h5>No hay capacitaciones registradas</h5></td>
+                            </tr>
+                        {% endif %}
+                       
+                </table>
+            </div>
+        </div>
+                        
+    </div>
+</div>
+
+
+
+<!--Imprimo Mensaje-->
+<!--{{ message }}-->
+<table id="tablainformacionadicional"></table>
+
+
+{% endblock %}

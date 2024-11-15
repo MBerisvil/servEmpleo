@@ -1,0 +1,77 @@
+{% extends 'seapp/base.html' %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'seapp/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'seapp/css/persona.css' %}">
+
+{% block container %}
+<br><br>
+<div class="row container-fluid">
+    <div class="col-12 col-md-10 offset-md-1"> 
+        <div class="card-body">
+            <br><br><br><br>
+            <div class="card hover shadow-lg border-0">
+                <div class="card-header" style="background:#24527A;">
+                    <h3 style="color:#ffff;">Datos Propios</h3> 
+                </div>
+                <div class="card-body text-left">
+                    <form action="{% url 'persona.html' %}" method="post" class="form-group" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input type="hidden" class="form-control" id="id_usuario" name="usuario" value="{{ user.id }}" disabled><br>
+                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre Completo" value="{{ user.first_name }}"><br>
+                                <input type="text" class="form-control" id="apellido" name="apellido" placeholder="Apellido" value="{{ user.last_name }}"><br>
+
+                                {% if user.is_enterprise %}
+                                    <input type="text" class="form-control" id="cuit" name="cuit" placeholder="CUIT" value="{{ persona.cuit }}"><br>
+                                {% else %}
+                                    <input type="text" class="form-control" id="dni" name="dni" placeholder="DNI" value="{{ persona.dni }}"><br>
+                                    <input type="text" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" placeholder="dd/mm/aaaa" value="{{ persona.fecha_nacimiento }}"><br>
+                                    <select name="sexo" class="select form-select" required id="id_sexo"> 
+                                        <option value="" selected>---------</option> 
+                                        <option value="1" {% if persona.sexo == 1 %}selected{% endif %}>Masculino</option> 
+                                        <option value="2" {% if persona.sexo == 2 %}selected{% endif %}>Femenino</option> 
+                                        <option value="3" {% if persona.sexo == 3 %}selected{% endif %}>Otro</option>             
+                                    </select><br>
+                                {% endif %}
+
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="{{ user.username }}"><br>
+                                <input type="text" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" value="{{ persona.telefono }}"><br>
+                                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección" value="{{ persona.direccion }}"><br>
+                                <input type="text" class="form-control" id="localidad" name="localidad" placeholder="Localidad" value="{{ persona.localidad }}"><br>
+                                <input type="text" class="form-control" id="provincia" name="provincia" placeholder="Provincia" value="{{ persona.provincia }}"><br>
+                                <input type="text" class="form-control" id="pais" name="pais" placeholder="País" value="{{ persona.pais }}"><br>
+                            </div>
+                            <div class="col-6 col-md-4 text-center">
+                                <div class="bg-transparent" style="border: none; padding: 20px;">
+                                    <br><br>
+                                    {% if persona.image %}
+                                        <img src="{{ persona.image.url }}" class="card-img-center" alt="..." style="border-radius: 08px 60px 08px 08px; width: 16rem; height: 18rem;">
+                                    {% else %}
+                                        <img src="{% static 'seapp/img/logo.png' %}" class="card-img-center" alt="..." style="border-radius: 08px 60px 08px 08px; width: 16rem; height: 18rem;">
+                                    {% endif %}
+                                </div>
+                                <input type="file" name="image" class="form-control" accept="image/*" id="id_image"><br> 
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <div class='d-flex justify-content-end'>
+                                <button type="submit" id="btnCancelar" class="btn btn-primary rounded-0 py-2 px-4" style="background: #5DACBD; border: none;">Cancelar</button>
+                                &nbsp;
+                                <button type="submit" id="btnGuardar" class="btn btn-primary rounded-0 py-2 px-4" style="background: #24527A; border: none;">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'seapp/js/bootstrap.bundle.min.js' %}" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<script src="{% static 'seapp/js/bootstrap.min.js' %}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="{% static 'seapp/js/persona.js' %}"></script>
+
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends 'seapp/base.html' %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'seapp\css\bootstrap.min.css'%}">
+<link rel="stylesheet" href="{% static 'seapp\css\persona.css'%}">
+
+
+{% block container %}
+
+{% load crispy_forms_tags %}
+<br><br>
+<div class="row container-fluid ">
+    <div class="col-12 col-md-10 offset-md-1"> 
+        <div class="card-body">
+            <br><br><br><br>
+            <div class="card hover shadow-lg border-0">
+                <div class="card-header" style="background:#24527A;">
+                     <h3 style="color:#ffff";>Dato propios</h3> 
+                </div>
+                <div class="card-body text-left">
+                <form control="" action="{% url 'modificarpersona.html'  %}" method="post" class="form-group" enctype="multipart/form-data">
+                        <!--Token de seguridad-->
+                        {% csrf_token %}
+
+                    {% for group in request.user.groups.all %}
+                    {% if group.name == 'Empresas' %}
+                    <!-- Form de Empresas -->
+                    <div class="row">
+                        <div class="col-md-8">
+                            <input type="hidden" max-lengh="30" class="form-control" id="id_usuario" name="usuario" disabled placeholder="{{user.id}}" value="{{user.id}}"><br>
+                            <input type="text" max-lengh="150" class="form-control" id="nombre" name="nombre" value="{{persona.nombre}}" placeholder="Nombre completo"><br>
+                            <input type="text" class="form-control" id="nombre" name="cuit" placeholder="{{persona.cuit}}" value="{{persona.cuit}}"><br>
+                            <input type="email" class="form-control" id="nombre" name="email" placeholder="{{persona.email}}" value="{{persona.email}}"><br>
+                            <input type="text" class="form-control" id="nombre" name="telefono" placeholder="{{persona.telefono}}" value="{{persona.telefono}}"><br>
+                            <input type="text" class="form-control" id="nombre" name="direccion" placeholder="Direcció" value="{{persona.direccion}}"><br>
+                            <input type="text" class="form-control" id="nombre" name="localidad" placeholder="Localidad" value="{{persona.localidad}}"><br>
+                            <input type="text" class="form-control" id="nombre" name="provincia" placeholder="Provincia" value="{{persona.provincia}}"><br>
+                            <input type="text" class="form-control" id="nombre" name="pais" placeholder="País" value="{{persona.pais}}><br>
+                        </div>
+                        <div class="col-6 col-md-4 text-center" style="">
+                            <div class="bg-transparent" style="border: none;  padding: 20px;">
+                                <br><br>
+                                {% if persona.image %}
+                                    <img src="{{ persona.image.url }}" class="card-img-center" alt="..." style="border-radius: 08px 60px 08px 08px; width: 16rem; height: 18rem;">
+                                {% else %}
+                                    <img src="{% static 'seapp/img/logo.png'%}" class="card-img-center" alt="..." style="border-radius: 08px 60px 08px 08px; width: 16rem; height: 18rem;">
+                                {% endif %}
+
+                              </div>
+                              <input type="file" name="image" class="form-control" accept="image/*" id="id_image"><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <div class='d-flex justify-content-end'>
+                        <button type="submit" id="btnCancelar" class="btn btn-primary rounded-0 py-2 px-4" style="background: #5DACBD; border: none;">Cancelar</button>
+                        &nbsp;
+                        <button type="submit" id="btnGuardar" class="btn btn-primary rounded-0 py-2 px-4"  style="background: #24527A; border: none;">Guardar</button>
+                    </div>
+                </div>
+                {% elif group.name == 'Candidatos'%}
+                <!-- Form de persona-->
+                <div class="row">
+                    <div class="col-md-8">
+                        <input type="hidden" max-lengh="30" class="form-control" id="id_usuario" name="usuario" disabled placeholder="{{user.id}}" value="{{user.id}}"><br>
+                        <input type="text" max-lengh="150" class="form-control" id="nombre" name="nombre"  placeholder="{{ persona.nombre }}" value="{{persona.nombre}}"><br>
+                        <input type="text" class="form-control" id="nombre" name="apellido"  placeholder="{{personas.apellido}}" value="{{persona.apellido}}"><br>
+                        <input type="integrity" class="form-control" id="nombre" name="dni" placeholder="{{persona.dni}}" value="{{persona.dni}}"><br>
+                        <input type="email" class="form-control" id="nombre" name="email" placeholder="email" value="{{user.username}}"><br>
+                        <input type="text" class="form-control" id="nombre" name="direccion" placeholder="{{persona.direccion}}" value="{{persona.direccion}}"><br>
+                        <input type="date" class="form-control" id="nombre" name="fecha_nacimiento" placeholder="{{persona.fecha_nacimiento}}" value="{{persona.fecha_nacimiento}}"><br>
+                        <select class="form-select form-select-md" aria-label="Small select example" name="sexo">
+                            <option selected disabled>Sexo</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                            <option value="O">Otro</option>
+                          </select><br>
+                          <input type="text" class="form-control" id="nombre" name="telefono" placeholder="{{persona.telefono}}" value="{{persona.telefono}}"><br>
+                        <input type="text" class="form-control" id="nombre" name="localidad" placeholder="{{persona.localidad}}" value="{{persona.localidad}}"><br>
+                        <input type="text" class="form-control" id="nombre" name="provincia" placeholder="{{persona.provincia}}" value="{{persona.provincia}}"><br>
+                        <input type="text" class="form-control" id="nombre" name="pais" placeholder="{{persona.pais}}" value="{{persona.pais}}"><br>
+                    </div>
+                    <div class="col-6 col-md-4 text-center" style="">
+                        <div class="bg-transparent" style="border: none;  padding: 20px;">
+                            <br><br>
+                            {% if persona.image %}
+                                <img src="{{ persona.image.url }}" class="card-img-center" alt="..." style="border-radius: 08px 60px 08px 08px; width: 16rem; height: 18rem;">
+                            {% else %}
+                                <img src="{% static 'seapp/img/logo.png'%}" class="card-img-center" alt="..." style="border-radius: 08px 60px 08px 08px; width: 16rem; height: 18rem;">
+                            {% endif %}
+                        </div>
+                        <input class="form-control" type="image" id="nombre"  label="Avatar" alt="submit" name="image" placeholder="Foto perfil" encry><br>
+                    </div>
+                </div>
+
+                <div class="card-footer text-center">
+                    <div class='d-flex justify-content-end'>
+                        <button type="submit" id="btnCancelar" class="btn btn-primary rounded-0 py-2 px-4" style="background: #5DACBD; border: none;">Cancelar</button>
+                        &nbsp;
+                        <button type="submit" id="btnGuardar" class="btn btn-primary rounded-0 py-2 px-4" style="background: #24527A; border: none;">Guardar</button>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </form>
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+<!--Imprimo Mensaje
+{{ messages }}
+<table id="persona">
+</table>-->
+
+<script src="{% static 'seapp\js/bootstrap.bundle.min.js'%}" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<script src="{% static 'seapp\js/bootstrap.min.js'%}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="{% static 'seapp\js/persona.js' %}" ></script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+{% endblock  %}

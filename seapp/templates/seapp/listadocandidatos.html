@@ -1,0 +1,133 @@
+{% extends 'seapp/base.html' %}
+
+{% load static %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'seapp/css/search.css' %}">
+
+
+
+{% block container %}
+<br>
+<br>
+
+<div class="row container-fluid">
+    <div class="card-header-center"> 
+        <div class="card-body">
+            <br><br><br>
+            <div class="card hover shadow-lg border-0">
+                <div class="card-header" style="background:#24527A;">
+                    <h3 style="color:#ffff;">Listado Candidatos</h3> 
+                </div>
+                <br>
+            
+                <nav class="navbar" style="background: transparent;">
+                    <div class="container-fluid">
+                        <a class="navbar-brand"></a>
+                        <form class="d-flex" method="GET" >
+                            <input class="form-control me-3" type="text" placeholder="Buscar..." aria-label="Search" name="q" value="{{ query }}">
+                            <button class="btn btn-primary rounded-0 py-2 px-4" type="submit" style="background: #24527A; border-color: #24527A; border-radius: 60;">Buscar</button>
+                        </form>
+                        
+                    </div>
+                </nav>
+                <div class="card-body text-left">
+                    <div class="table-responsive">                        
+                        <table class="table table-bordered table-responsive">
+                            <thead class="thead-dark" style="background: #5DACBD; color:#fff;">
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Profesión</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for persona in candidatos %}
+                            <tr>
+                                <td>{{ persona.nombre | title }}</td>
+                                <td>{{ persona.apellido | title }}</td>
+                                <td>{{ persona.email }}</td>
+                                <td>{{ persona.telefono }}</td>
+                                <td>
+                                    {% for estudio in persona.estudios %}
+                                    <div>{{ estudio.carrera }} - 
+                                        
+                                        {% if estudio.niv_academico == 1 %} Primario 
+                                        {% elif estudio.niv_academico == 2 %} Secundario 
+                                        {% elif estudio.niv_academico == 3 %} Terciario 
+                                        {% elif estudio.niv_academico == 4 %} Universitario 
+                                        {% endif %}
+                                            </div>
+                                {% empty %}
+                                        <div>No tiene estudios registrados</div>
+                                    {% endfor %}
+                                </td>
+                                <td class="text-center"><a href="mailto:{{ persona.email }}" class="btn btn-primary" style="background: none;border: none;"><img src="{% static 'seapp/img/icons/email-48.png' %}" style="height: 28px; width: 28px;" alt=""></a></td>
+                                 <!--<td>
+                                   <a href="#" target="_blank">
+                                        <i class="fa-brands align-items-center btn btn-sm" style="font-size: 11px; border:none;">
+                                            <img src="{% static 'seapp/img/icons/view-48.png' %}" style="height: 20px; width: 20px;" alt=""></i>
+                                    </a>
+                                    {% for group in request.user.groups.all %}
+                                        {% if group.name == 'Administrador' %}
+                                            <i class="fa-brands align-items-center btn btn-sm" style="font-size: 11px; border:none;">
+                                                <img src="{% static 'seapp/img/icons/remove-48.png' %}" style="height: 20px; width: 20px;" alt=""></i> 
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>-->
+                            </tr>                          
+                            {% endfor %}
+                        </tbody>
+                        </table>
+                    </div>
+                    <div class="text-end">
+                        <!-- Paginador -->
+                    </div>
+                </div>
+                <!-- Paginación -->
+                <section class="paginations ">
+                    <div class="container d-flex justify-content-center">
+                        <ul class="pagination">
+                            <li class="icon">
+                                
+                                {% if page_obj.has_previous %}
+                                    <a class="page-link" style="background: #24527A; border-color: #24527A; color:#ffff;" href="?page={{ page_obj.previous_page_number }}&q={{ query }}">Ant.</a>
+                                {% endif %}
+                                
+                                
+                            </li>
+                            <li><span class="page-link" style="color: #24527A; font-size: 14px; font-weight: Italic; border:none; text-decoration: none;">
+                                Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+                            </span></li>
+                            <li class="icon">
+                                {% if page_obj.has_next %}
+                                    <a class="page-link" style="background: #24527A; border-color: #24527A; color:#ffff;" href="?page={{ page_obj.next_page_number }}&q={{ query }}">Sig.</a>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--{% include "seapp/messages.html" %}-->
+
+<script src="{% static 'seapp/js/jquery.min.js' %}"></script>
+<script src="{% static 'seapp/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'seapp/js/search.js' %}"></script>
+
+<script>
+    setTimeout(function(){
+        if($('table tr').length > 0){
+            $('msg').remove();
+        }
+    }, 2000)
+</script>
+
+{% endblock %}
