@@ -6,7 +6,7 @@ En lo personal se me ocurrió crear Servicio de Empleo, un sitio web que brinda 
 
 El sistema le va a brindar la posibilidad de que los candidatos sean vistos por las empresas que necesiten cubrir una vacante laboral en sus empresas. Estas van a poder registrarse como empresas para ingresar al sistema, navegar por los candidatos cargados en la base y ellos mismos ponerse en contacto para coordinar una entrevista.
 
-![banner png](https://github.com/MBerisvil/Serv.Empleo/assets/95480927/03d5616d-d23a-4f9d-9712-5fdbd6e2e4d3)
+![banner png]([https://github.com/MBerisvil/Serv.Empleo/assets/95480927/03d5616d-d23a-4f9d-9712-5fdbd6e2e4d3](https://github.com/MBerisvil/servEmpleo/blob/main/seapp/static/seapp/img/banner.png.png))
 
 ## 💻 Desarrollado con:
 ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![Django](https://img.shields.io/badge/django-%23092E20.svg?style=for-the-badge&logo=django&logoColor=white) ![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
